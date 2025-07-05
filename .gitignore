@@ -1,0 +1,4 @@
+*.bin
+data/
+*.pyc
+notebooks/.ipynb_checkpoints/
