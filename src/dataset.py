@@ -43,6 +43,7 @@ def prepare_loaders(df, fold, data_transforms, CFG, debug=False):
         valid_df = valid_df.query("empty==0").head(32 * 3)
     train_dataset = BuildDataset(train_df, transforms=data_transforms['train'])
     valid_dataset = BuildDataset(valid_df, transforms=data_transforms['valid'])
+    print(train_dataset[0])
 
     train_loader = DataLoader(train_dataset, batch_size=CFG.train_bs if not debug else 20,
                               num_workers=4, shuffle=True, pin_memory=True, drop_last=False)
