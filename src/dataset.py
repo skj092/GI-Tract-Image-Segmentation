@@ -19,9 +19,11 @@ class BuildDataset(Dataset):
     def __getitem__(self, idx):
         img_path = self.image_paths[idx]
         mask_path = self.mask_paths[idx]
+        print("image_path", img_path)
         img = cv2.imread(img_path)
         img = img.astype('float32')
-        img = img/np.max(img)
+        if np.max(img):
+            img = img/np.max(img)
         mask = np.load(mask_path)
         mask = mask.astype('float32')
         mask = mask/255
@@ -32,7 +34,6 @@ class BuildDataset(Dataset):
         img = img.transpose(2, 0, 1)
         mask = mask.transpose(2, 0, 1)
         return torch.tensor(img), torch.tensor(mask)
-
 
 def prepare_loaders(df, fold, data_transforms, CFG, debug=False):
     train_df = df.query("fold!=@fold").reset_index(drop=True)
